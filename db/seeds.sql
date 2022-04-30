@@ -3,8 +3,8 @@ USE employeeDB;
 INSERT INTO department
 (name)
 VALUES
-('marketing'),
-('programming');
+('mechanic'),
+('manager');
 
 INSERT INTO role
 (title, salary, department_id)
