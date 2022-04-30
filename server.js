@@ -1,20 +1,9 @@
 const inquirer = require("inquirer");
-const mysql = require("mysql2");
+const db = require("./config/connection.js");
 
-//database connection
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: 'localhost',
-    dialect: 'mysql2',
-    port: 3306
-  }
-);
 
 const promptUser = () => {
-  return inquirer.prompt([
+  inquirer.prompt([
     {
       type: 'list',
       name: 'menuChoice',
@@ -24,7 +13,8 @@ const promptUser = () => {
     },
 
   ])
-    .then(promptChoices => {
+    .then(({menuChoice}) => {
+      console.log(menuChoice)
       //take prompt choices, run associated functions
       //departments
       if (promptChoices.menuChoice === 'View all departments') {
@@ -34,18 +24,23 @@ const promptUser = () => {
       else if (promptChoices.menuChoice === 'View all roles') {
         viewRoles();
       }
+      //employees
       else if (promptChoices.menuChoice === 'View all employees') {
         viewEmployees();
       }
+      //add department
       else if (promptChoices.menuChoice === 'Add a department') {
         addDepartment();
       }
+      //add role
       else if (promptChoices.menuChoice === 'Add a role') {
         addRole();
       }
+      //add employee
       else if (promptChoices.menuChoice === 'Add an employee') {
         addEmployee();
       }
+      //update employee role
       else if (promptChoices.menuChoice === 'Update employee role') {
         updateRole();
       }
@@ -58,4 +53,5 @@ const promptUser = () => {
 
 
     })
-  }
+}
+promptUser();
